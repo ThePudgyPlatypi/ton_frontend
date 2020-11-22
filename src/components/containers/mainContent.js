@@ -1,7 +1,11 @@
 import React from 'react';
 
-function Home() {
-    return <p>Main Content Container</p>;
-}
+const ContentContainer = (props) => {
+    return (
+        <div className={`main-content container ${props.page}`}>
+            {props.children}
+        </div>
+    );
+};
 
-export default Home;
+export default ContentContainer;
