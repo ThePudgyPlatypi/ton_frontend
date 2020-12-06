@@ -1,20 +1,16 @@
 import React from 'react';
 import ContentContainer from '../components/containers/mainContent';
 
-
-const Home = () => {
+const Music = () => {
     return (
         <>
             <ContentContainer>
-                <div className="player">
-                    <p>The Music player will be here</p>
-                </div>
                 <div>
-                    <p>Visualizer Component here</p>
+                    <p>This is the music page</p>
                 </div>
             </ContentContainer>
         </>
     );
 };
 
-export default Home;
+export default Music;

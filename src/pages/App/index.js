@@ -5,18 +5,35 @@ import {
     Route,
     Switch
 } from 'react-router-dom';
+import 'foundation-sites/dist/css/foundation.min.css';
+import 'jquery/dist/jquery';
+
+//pages
 import Home from '../Home';
-// bring in pages here
+import Music from '../Music';
+import Store from '../Store';
+import News from '../News';
+
+// components
+import HeaderContainer from '../../components/containers/header';
+import FooterContainer from '../../components/containers/footer';
 
 function App() {
     return (
-        <Router>
-            <div className="body">
-                <Switch>
-                    <Route path="/" component={Home} exact/>
-                </Switch>
-            </div>
-        </Router> 
+        <>
+            <HeaderContainer />
+            <Router>
+                <div className="body">
+                    <Switch>
+                        <Route path="/" component={Home} exact/>
+                        <Route path="/music" component={Music}/>
+                        <Route path="/store" component={Store}/>
+                        <Route path="/news" component={News}/>
+                    </Switch>
+                </div>
+            </Router> 
+            <FooterContainer />
+        </>
     );
   }
 

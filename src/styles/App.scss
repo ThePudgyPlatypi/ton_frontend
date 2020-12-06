@@ -1,1 +1,9 @@
 // import all page styles and variables
+
+// things we need first
+@import "./variables.scss";
+
+// pages
+@import "./page/home.scss";
+
+// components
