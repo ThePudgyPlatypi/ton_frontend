@@ -1,11 +1,10 @@
 import React from 'react';
-import '../../styles/App.scss';
 import {
     BrowserRouter as Router,
     Route,
     Switch
 } from 'react-router-dom';
-import 'foundation-sites/dist/css/foundation.min.css';
+import '../../styles/App.scss';
 import 'jquery/dist/jquery';
 
 //pages

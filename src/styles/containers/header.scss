@@ -1,0 +1,13 @@
+.site-header {
+    @include xy-grid;
+    padding: 50px 30px 0 30px;
+    .header-heading-container {
+        @include xy-cell(3);
+    }
+
+    .header-mplayer-container {
+        @include xy-cell(3);
+    }
+
+    // navigation-container in navigation.scss
+}

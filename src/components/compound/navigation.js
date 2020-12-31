@@ -18,9 +18,11 @@ const Navigation = () => {
     }, []);
 
     return (
-        <ul className="navigation">
-            {isLoading ? "loading" : <NavItem links={links} />}
-        </ul>
+        <div className="navigation-container">
+            <ul className="navigation-ul">
+                {isLoading ? "loading" : <NavItem links={links} />}
+            </ul>
+        </div>
     );
 };
 

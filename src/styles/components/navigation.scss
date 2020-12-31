@@ -1,0 +1,50 @@
+.navigation-container {
+    @include xy-cell(6);
+    display: flex;
+    justify-content: flex-end;
+    max-height: 100px;
+    .navigation-ul {
+        @include xy-grid;
+        list-style: none;
+        max-width: 560px;
+        flex: 1 0 auto;
+        .nav-item {
+            @include xy-cell(4, $gutters: 0);
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            position: relative;
+            .nav-item-link {
+                text-decoration: none;
+                text-transform: lowercase;
+                font-size: 2rem;
+                font-weight: 800;
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-end;
+                color: $white;
+                text-shadow: -2px 4px $black;
+                z-index: 10;
+                width: 100%;
+                height: 100%;
+                span {
+                    padding: 10px;
+                }
+            }
+            &:before {
+                content: '';
+                width: 0;
+                background-color: $outrageous-orange;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                transition: width ease-in .1s;
+            }
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

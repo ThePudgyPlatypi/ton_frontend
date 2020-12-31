@@ -1,4 +1,9 @@
-// import all page styles and variables
+// import all page styles and variable
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap');
+
+//Foundation
+@import "../../node_modules/foundation-sites/scss/foundation.scss";
 
 // things we need first
 @import "./variables.scss";
@@ -6,4 +11,10 @@
 // pages
 @import "./page/home.scss";
 
+// containers
+@import "./containers/header.scss";
+
 // components
+@import "./components/navigation.scss";
+@import "./components/title.scss";
+@import "./components/socialLinks.scss";

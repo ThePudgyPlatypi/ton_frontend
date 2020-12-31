@@ -1,0 +1,15 @@
+.header-heading-container {
+    .site-heading-link {
+        text-decoration: none;
+        color: $white;
+    }
+    .site-heading {
+        line-height: 3.7rem;
+        span {
+            display: block;
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+    }
+}
