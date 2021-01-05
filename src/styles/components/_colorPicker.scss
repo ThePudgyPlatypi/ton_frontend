@@ -1,0 +1,35 @@
+.color-picker {
+    .color-picker-title {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        line-height: 0.8rem;
+        padding-bottom: 10px;
+        cursor: pointer;   
+    }
+
+    .color-picker-container {
+        height: 0;
+        overflow: hidden;
+        &.open {
+            height: 100%;
+        }
+    }
+
+    .color-picker-item {
+        display: flex;
+        align-items: center;
+        .color-picker-color {
+            height: 10px;
+            width: 10px;
+            margin-right: 10px;
+        }
+
+        .color-picker-name {
+            opacity: 0;
+        }
+
+        &:hover .color-picker-name {
+            opacity: 1;
+        }
+    }
+}   

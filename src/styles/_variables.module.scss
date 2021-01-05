@@ -13,3 +13,12 @@ $crazy-cyan: rgb(25, 255, 239);
 $base-font: 'Open Sans', sans-serif;
 $base-font-size: 1rem;
 
+:export {
+    outrageousOrange: $outrageous-orange;
+    bodaciousBlue: $bodacious-blue;
+    radicalRed: $radical-red;
+    powPurple: $pow-purple;
+    greatGreen: $great-green;
+    yikesYellow: $yikes-yellow;
+    crazyCyan: $crazy-cyan;
+}

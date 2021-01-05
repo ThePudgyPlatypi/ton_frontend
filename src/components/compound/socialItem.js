@@ -2,13 +2,18 @@ import React from 'react';
 import Anchor from '../basic/anchor';
 
 const SocialItem = ({links}) => {
-    return links.map((value, key) =>
-        <li key={key} className="social-item">
-            <Anchor href={value.Link} classes="social-link-url">
-                <img href={`${process.env.REACT_APP_BACKEND_URL}${value.Icon.formats.thumbnail.url}`} 
-                    alt={value.Icon.alternativeText} />
-            </Anchor>
-        </li>
+    return links.map((value, key) => {
+        let url = value.Icon.formats ? value.Icon.formats.thumbnail.url : value.Icon.url;
+        console.log(value);
+        return (
+                <li key={key} className="social-item">
+                    <Anchor href={value.Link} classes="social-link-url">
+                        <img src={`${process.env.REACT_APP_BACKEND_URL}${url}`} 
+                            alt={value.Icon.alternativeText} />
+                    </Anchor>
+                </li>
+            );
+        }
     );
 };
 

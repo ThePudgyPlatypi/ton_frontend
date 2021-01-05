@@ -6,15 +6,17 @@
 @import "../../node_modules/foundation-sites/scss/foundation.scss";
 
 // things we need first
-@import "./variables.scss";
+@import "./variables.module.scss";
 
 // pages
 @import "./page/home.scss";
 
 // containers
 @import "./containers/header.scss";
+@import "./containers/floatingControl.scss";
 
 // components
 @import "./components/navigation.scss";
 @import "./components/title.scss";
 @import "./components/socialLinks.scss";
+@import "./components/colorPicker.scss";
