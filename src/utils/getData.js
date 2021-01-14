@@ -1,4 +1,4 @@
-export async function getData(url = '', options = {}, state = '') {
+export async function getData(url = '', options = {}, state = '', callback = null) {
     const response = await fetch(url, {
         method: 'GET',
         ...options  
@@ -13,8 +13,13 @@ export async function getData(url = '', options = {}, state = '') {
             if(state) {
                 console.log(data);
                 state(data);
+
+                if(callback) {
+                    callback(data);
+                }
             }
         });
+
     }).catch((error) => {
         console.log(error);
     });

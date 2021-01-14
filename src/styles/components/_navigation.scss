@@ -31,8 +31,7 @@
                     padding: 10px;
                 }
             }
-            &:before {
-                content: '';
+            & .slider {
                 width: 0;
                 background-color: $outrageous-orange;
                 height: 100%;
@@ -41,7 +40,7 @@
                 transition: width ease-in .1s;
             }
             &:hover {
-                &:before {
+                & .slider {
                     width: 100%;
                 }
             }

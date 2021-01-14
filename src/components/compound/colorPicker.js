@@ -1,8 +1,18 @@
+/* eslint-disable newline-after-var */
 import React from 'react';
 import colors from '../../styles/_variables.module.scss';
 
 const ColorPicker = () => {
     const colorPickerTitleText = `< change color`;
+
+    function changeColor(e, color) {
+        e.preventDefault();
+        let elements = document.querySelectorAll(".color-changer");
+        
+        elements.forEach((value) => {
+            value.style.backgroundColor = color;
+        });
+    }
 
     function expandColors(e) {
         e.preventDefault();
@@ -30,7 +40,8 @@ const ColorPicker = () => {
                     };
 
                     return (
-                        <div key={index} className="color-picker-item">
+                        <div key={index} className="color-picker-item" 
+                            onClick={(e) => { changeColor(e, colors[name]); } }>
                             <span className="color-picker-color" style={styles}></span>
                             <span className="color-picker-name">
                                 {name}

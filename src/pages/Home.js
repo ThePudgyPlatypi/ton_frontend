@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentContainer from '../components/containers/mainContent';
-
+import Visualizer from '../components/compound/visualizer';
 
 const Home = () => {
     return (
@@ -10,7 +10,7 @@ const Home = () => {
                     <p>The Music player will be here</p>
                 </div>
                 <div>
-                    <p>Visualizer Component here</p>
+                    <Visualizer />
                 </div>
             </ContentContainer>
         </>
