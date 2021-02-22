@@ -13,6 +13,11 @@ $crazy-cyan: rgb(25, 255, 239);
 $base-font: 'Open Sans', sans-serif;
 $base-font-size: 1rem;
 
+// paddings
+$horizontal-padding: 30px;
+$vertical-padding: 50px;
+$header-padding: $vertical-padding $horizontal-padding 0 $horizontal-padding;
+
 :export {
     outrageousOrange: $outrageous-orange;
     bodaciousBlue: $bodacious-blue;

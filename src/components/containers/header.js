@@ -10,7 +10,6 @@ const HeaderContainer = () => {
             <div className="site-header">
                 <Title />
                 <SongList />
-                <div className="header-mplayer-container">Music Player</div>
                 <Navigation /> 
             </div>
             <FloatingControl />

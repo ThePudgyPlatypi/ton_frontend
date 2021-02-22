@@ -1,23 +1,22 @@
 import React from 'react';
 
-const AudioControls = ({source, uniqueId}) => {
+const AudioControls = ({id}) => {
     function handlePlay() {
-        document.getElementById(uniqueId).play();
+        document.getElementById(id).play();
     }
 
     function handlePause() {
-        document.getElementById(uniqueId).pause();
+        document.getElementById(id).pause();
     }
 
     return (
         <>
-            <audio id={uniqueId} src={`${process.env.REACT_APP_BACKEND_URL}${source}`}></audio>
-            <div>
+            <div className="audio-controls-container">
                 <button onClick={handlePlay}>Play the Audio</button>
                 <button onClick={handlePause}>Pause the Audio</button>
             </div>
         </>
     );
-};
+    };
 
 export default AudioControls;

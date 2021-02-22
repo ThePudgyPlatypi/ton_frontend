@@ -1,23 +1,46 @@
 /* eslint-disable newline-after-var */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import * as d3 from 'd3';
+import AudioVisualizer from '../../utils/AudioVisualizer';
 
 
-const Visualizer = () => {
-    let [isLoading, setIsLoading] = useState(true);
+const Visualizer = ({element, source}) => {
+    let AudioCtx = useRef();
+    let audioElement = useRef();
+    let visualizerElement = useRef();
 
     useEffect(() => {
-        // https://www.bignerdranch.com/blog/music-visualization-with-d3-js/
-        // let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        // let analyser = audioCtx.createAnalyser();
-        // let visualizer = document.getElementById('visualizer-container');
-        // let audioFile = audioCtx.createMediaElementSource(visualizer);
-    }, [isLoading]);
+        if(audioElement.current && visualizerElement.current) {
+            AudioCtx.current = new AudioVisualizer(
+                audioElement.current,
+                visualizerElement.current,
+                d3);
+            AudioCtx.current.connect();
+            AudioCtx.current.init();
+        }
+    }, [audioElement, visualizerElement]);
+
+    function visualizeStart() {
+        AudioCtx.current.startChart();
+        AudioCtx.current.renderChart();
+    }
+
+    function visualizeStop() {
+        AudioCtx.current.stopChart();
+    }
 
     return (
         <>
-            <div id="visualizer-container">
-
-            </div>
+            <audio 
+                ref={audioElement}
+                id={element}
+                src={`${process.env.REACT_APP_BACKEND_URL}${source}`}
+                autoPlay={false}
+                onPlay={visualizeStart}
+                onPause={visualizeStop}
+                crossOrigin="anonymous">
+            </audio>
+            <div ref={visualizerElement} id="visualizer-container" ></div>
         </>
     );
 };
