@@ -1,21 +1,20 @@
 /* eslint-disable newline-after-var */
 class AudioVisualizer {
-    static Audio = new (window.AudioContext || window.webkitAudioContext)();
-    static Bars =  new Uint8Array(40);
-    
     // audio ctx analyser
     #analyser;
     #svg;
 
     constructor(
-        audioElement = "",
-        visualizerElement = "",
-        d3 = "",
-        bars = 35,
-        svgHeight = window.innerHeight,
-        svgWidth = 975,
+        audioElement,
+        visualizerElement,
+        d3,
+        svgHeight,
+        svgWidth,
+        bars = 40,
         barPadding = 1,
     ) {
+        this.Bars = new Uint8Array(bars);
+        this.Audio = new (window.AudioContext || window.webkitAudioContext)();
         this.audioElement = audioElement;
         this.visualizerElement = visualizerElement;
         this.d3 = d3;
@@ -23,26 +22,27 @@ class AudioVisualizer {
         this.svgWidth = svgWidth;
         this.barPadding = barPadding;
         this.stop = true;
-        this.bars = bars;
+        this.bars = this.Bars.length;
+        this.rectangles = null;
+        this.lines = null;
     }
 
     init() {
         let self = this;
-        let bars = AudioVisualizer.Bars.length;
         this.#svg = this.createSvg(); 
 
         this.#svg.selectAll('rect')
-            .data(AudioVisualizer.Bars)
+            .data(this.Bars)
             .enter()
             .append('rect')
             .attr('y', function (d, i) {
-                return i * self.svgHeight / bars;
+                return i * self.svgHeight / self.bars;
             }).attr('height', function() {
-                return self.svgHeight / bars;
+                return self.svgHeight / self.bars;
             }).attr('x', function() {
                 return 0;
             }).attr('width', function() {
-                return self.svgWidth - 50;
+                return self.svgWidth - 100;
             }).attr('fill', function() {
                 return '#070707';
             }).attr('stroke', function() {
@@ -52,13 +52,13 @@ class AudioVisualizer {
             });
 
         this.#svg.selectAll('line')
-            .data(AudioVisualizer.Bars)
+            .data(this.Bars)
             .enter()
             .append('line')
             .attr('y1', function (d, i) {
-                return i * self.svgHeight / bars;
+                return i * self.svgHeight / self.bars;
             }).attr('y2', function(d, i) {
-                return i * self.svgHeight / bars;
+                return i * self.svgHeight / self.bars;
             }).attr('x1', function() {
                 return 0;
             }).attr('x2', function() {
@@ -71,15 +71,16 @@ class AudioVisualizer {
     }
 
     connect() {
-        this.#analyser = AudioVisualizer.Audio.createAnalyser();
-        let source = AudioVisualizer.Audio.createMediaElementSource(this.audioElement);
+        this.#analyser = this.Audio.createAnalyser();
+        console.log(this.#analyser);
+        let source = this.Audio.createMediaElementSource(this.audioElement);
         source.connect(this.#analyser);
-        source.connect(AudioVisualizer.Audio.destination);
+        source.connect(this.Audio.destination);
     }
 
     startChart() {
         this.setStop();
-        AudioVisualizer.Audio.resume();
+        this.Audio.resume();
     }
 
     stopChart() {
@@ -90,15 +91,59 @@ class AudioVisualizer {
         this.stop = !this.stop;
     }
 
+    setSvgHeight(height) {
+        this.svgHeight = height;
+    }
+
+    setSvgWidth(width) {
+        this.svgWidth = width;
+    }
+
+    updateChart() {
+        let self = this;
+
+        // this.init();
+        if(this.#svg) {
+            this.#svg
+                .attr('height', () => this.svgHeight)
+                .attr('width', () => this.svgWidth);
+
+            this.#svg.selectAll('rect')
+                .attr('y', function (d, i) {
+                    return i * self.svgHeight / self.bars;
+                }).attr('height', function() {
+                    return self.svgHeight / self.bars;
+                });
+
+            this.#svg.selectAll('line')
+                .attr('y1', function (d, i) {
+                    return i * self.svgHeight / self.bars;
+                }).attr('y2', function(d, i) {
+                    return i * self.svgHeight / self.bars;
+                }).attr('x1', function() {
+                    return 0;
+                }).attr('x2', function() {
+                    return self.svgWidth;
+                });
+        }
+       
+    }
+
+    ramp(n) {
+        let percentage = Math.round(n / 255 * this.svgWidth);
+        
+        return percentage;
+    }
+
     renderChart() {   
         let self = this;
 
         let id = requestAnimationFrame(this.renderChart.bind(this));
 
         // Copy frequency data to frequencyData array.
-        this.#analyser.getByteFrequencyData(AudioVisualizer.Bars);
+        this.#analyser.getByteFrequencyData(this.Bars);
 
-        if(AudioVisualizer.Bars.every((d) => d === 0) && this.stop) {
+        if(this.Bars.every((d) => d === 0) && this.stop) {
             // will need to launch idle animation here
             cancelAnimationFrame(id);
             return;
@@ -106,12 +151,12 @@ class AudioVisualizer {
 
         // Update d3 chart with new data.
         this.#svg.selectAll('rect')
-            .data(AudioVisualizer.Bars)
+            .data(this.Bars)
             .attr('x', function() {
                 return 0;
             })
             .attr('width', function(d) {
-                return self.svgWidth - d * 3.2;
+                return self.svgWidth - self.ramp(d);
             });
     }
 

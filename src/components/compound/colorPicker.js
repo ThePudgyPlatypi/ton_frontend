@@ -1,9 +1,17 @@
 /* eslint-disable newline-after-var */
-import React from 'react';
+import React, {useEffect} from 'react';
 import colors from '../../styles/_variables.module.scss';
 
 const ColorPicker = () => {
     const colorPickerTitleText = `< change color`;
+
+    // useEffect(() => {
+    //     let elements = document.querySelectorAll(".color-changer");
+        
+    //     elements.forEach((value) => {
+    //         value.style.backgroundColor = color;
+    //     });
+    // }, [])
 
     function changeColor(e, color) {
         e.preventDefault();
