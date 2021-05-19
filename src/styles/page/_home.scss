@@ -3,4 +3,7 @@ body {
     font-size: $base-font-size;
     background-color: $black;
     color: $white;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
 }

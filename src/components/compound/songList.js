@@ -1,9 +1,8 @@
 /* eslint-disable newline-after-var */
 import React, {useEffect, useState} from 'react';
-import SongTitle from '../basic/songTitle';
-import AudioControls from '../basic/audioControls';
 import SongTitleHeader from '../compound/songListHeader';
 import Visualizer from '../compound/visualizer';
+import AudioClickHandler from '../compound/audioClickHandler';
 
 const SongList = () => {
     let [music, setMusic] = useState([]);
@@ -11,10 +10,6 @@ const SongList = () => {
     let [src, setSrc] = useState("");
     let [audioElement, setAudioElement] = useState("media-element");
     let [background, setBackground] = useState('');
-
-    let backgroundImage = {
-        backgroundImage: background
-    };
 
     useEffect(() => {
         let response = async () => {
@@ -40,12 +35,16 @@ const SongList = () => {
         <>
             <div className="song-list-container">
                 <SongTitleHeader />
-                <AudioControls id={audioElement} />
                 <ul className="song-list">
                     {music.map((song, key) => {
                         return (
                             <li key={key} className="song-list-item">
-                                <SongTitle song={song} setSrc={setSrc} setBackground={setBackground}/>
+                                <AudioClickHandler 
+                                    id={audioElement}
+                                    song={song}
+                                    setSrc={setSrc}
+                                    setBackground={setBackground}
+                                />
                             </li>
                             );
                         })

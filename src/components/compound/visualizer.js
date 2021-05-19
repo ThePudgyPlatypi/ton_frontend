@@ -57,6 +57,17 @@ const Visualizer = ({element, source}) => {
         AudioCtx.current.stopChart();
     }
 
+    function songEnd() {
+        visualizeStop();
+        document.querySelectorAll('.song-control-wrapper').forEach(
+            (songElement)=> {
+                if (songElement.classList.contains('playing')) {
+                    songElement.classList.toggle('playing');
+                }
+            }
+        );
+    }
+
     function visualizerDimensionListener() {
         window.addEventListener("resize", () => {
             // set width and height of visualizer
@@ -74,6 +85,7 @@ const Visualizer = ({element, source}) => {
                 autoPlay={false}
                 onPlay={visualizeStart}
                 onPause={visualizeStop}
+                onEnded={songEnd}
                 crossOrigin="anonymous">
             </audio>
             <div ref={visualizerElement} id="visualizer-container" ></div>

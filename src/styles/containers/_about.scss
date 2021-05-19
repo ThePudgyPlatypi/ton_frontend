@@ -1,0 +1,16 @@
+.about-container {
+    margin-top: 40%;
+    min-height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .about-text {
+        max-width: 600px;
+        width: 100%;
+        z-index: 1;
+        margin-left: 30%;
+    }
+}

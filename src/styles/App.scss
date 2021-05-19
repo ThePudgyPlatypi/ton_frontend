@@ -8,6 +8,10 @@
 // things we need first
 @import "./variables.module.scss";
 
+// mixins
+@import "./mixins/slider.scss";
+@import "./mixins/textShadow.scss";
+
 // pages
 @import "./page/home.scss";
 
@@ -16,9 +20,11 @@
 @import "./containers/floatingControl.scss";
 @import "./containers/songList.scss";
 @import "./containers/visualizer.scss";
+@import "./containers/about.scss";
 
 // components
 @import "./components/navigation.scss";
 @import "./components/title.scss";
 @import "./components/socialLinks.scss";
 @import "./components/colorPicker.scss";
+@import "./components/audioControls.scss";

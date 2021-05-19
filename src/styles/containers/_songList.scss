@@ -4,4 +4,56 @@
     transform: translateY(100%);
     margin-left: 25%;
     z-index: 100;
+    ul.song-list {
+        list-style: none;
+        padding-left: 0;
+        transform: translateX(-45px);
+        li.song-list-item {
+            .song-control-wrapper {
+                @include slider;
+                display: inline-flex;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                    .play-svg {
+                        opacity: 1;
+                    }
+                }
+            
+                &.playing:hover {
+                    .equalizer-svg {
+                        rect {
+                            animation-play-state: paused;
+                        }
+                    }
+            
+                    .play-svg {
+                        opacity: 0;
+                    }
+                }
+            
+                &.playing {
+                    .equalizer-svg {
+                        opacity: 1;
+                    }
+            
+                    .pause-svg {
+                        opacity: 0;
+                    }
+                }
+
+                .song-title {
+                    position: relative;
+                    display: flex;
+                    .song-title-text {
+                        @include textShadow($x: -1.5px, $y: 2px);
+                        padding: 5px;
+                        z-index: 10;
+                    }
+                }
+            }
+        }
+    }
 }

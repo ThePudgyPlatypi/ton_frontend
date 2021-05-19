@@ -1,4 +1,8 @@
+/* eslint-disable max-depth */
 /* eslint-disable newline-after-var */
+import $ from 'jquery';
+import velocity from 'velocity-animate';
+
 class AudioVisualizer {
     // audio ctx analyser
     #analyser;
@@ -13,8 +17,11 @@ class AudioVisualizer {
         bars = 40,
         barPadding = 1,
     ) {
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
         this.Bars = new Uint8Array(bars);
-        this.Audio = new (window.AudioContext || window.webkitAudioContext)();
+        this.Audio = new AudioContext({
+            sampleRate: 44100
+        });
         this.audioElement = audioElement;
         this.visualizerElement = visualizerElement;
         this.d3 = d3;
@@ -25,6 +32,9 @@ class AudioVisualizer {
         this.bars = this.Bars.length;
         this.rectangles = null;
         this.lines = null;
+        this.idle = true;
+        this.counter = 0;
+        this.rectangles = '';
     }
 
     init() {
@@ -42,7 +52,7 @@ class AudioVisualizer {
             }).attr('x', function() {
                 return 0;
             }).attr('width', function() {
-                return self.svgWidth - 100;
+                return self.svgWidth;
             }).attr('fill', function() {
                 return '#070707';
             }).attr('stroke', function() {
@@ -50,6 +60,9 @@ class AudioVisualizer {
             }).attr('stroke-width', function() {
                 return 1;
             });
+
+        this.rectangles = document.querySelectorAll('#visualizer-container rect');
+        this.rectangles = Array.from(this.rectangles);
 
         this.#svg.selectAll('line')
             .data(this.Bars)
@@ -68,23 +81,100 @@ class AudioVisualizer {
             }).attr('stroke-width', function() {
                 return 8;
             });
+        this.renderChart();
     }
 
     connect() {
         this.#analyser = this.Audio.createAnalyser();
-        console.log(this.#analyser);
         let source = this.Audio.createMediaElementSource(this.audioElement);
         source.connect(this.#analyser);
         source.connect(this.Audio.destination);
     }
 
+    createSvg() {
+        let self = this;
+
+        return this.d3.select(this.visualizerElement)
+            .append('svg')
+            .attr('height', self.svgHeight)
+            .attr('width', self.svgWidth);
+    }
+
+    randomPercentage(upTo, add) {
+        return `${Math.floor(Math.random() * upTo) + add}%`;
+    }
+
+    idleAnimation() {
+        let self = this;
+
+        let rectangles = $('#visualizer-container rect');
+
+        velocity(rectangles, {
+            width: [function() {
+                return self.randomPercentage(10, 90);
+            }, "100%"]
+        }, {
+            duration: 250,
+        });
+
+        velocity($('#visualizer-container rect'), {
+            width: [function() {
+                return self.randomPercentage(10, 90);
+            }, function(i) {
+                return $(rectangles[i]).attr("width");
+            }]
+        }, {
+            loop: true,
+            duration: 1000,
+        });
+    }
+
+    ramp(n) {
+        let percentage = Math.round(n / 255 * this.svgWidth);
+        
+        return percentage;
+    }
+
+    renderChart() {   
+        let self = this;
+        let id = requestAnimationFrame(this.renderChart.bind(this));
+
+        this.#analyser.getByteFrequencyData(this.Bars);
+
+        if(this.Bars.every((d) => d === 0) && this.stop) {
+            if(this.idle) {
+                this.idleAnimation();
+            }
+            // exits
+            cancelAnimationFrame(id);
+        }
+
+        // Update d3 chart with new data.
+        this.#svg.selectAll('rect')
+            .data(this.Bars)
+            .attr('x', function() {
+                return 0;
+            })
+            .attr('width', function(d) {
+                return self.svgWidth - self.ramp(d);
+            });
+    }
+
     startChart() {
         this.setStop();
-        this.Audio.resume();
+        this.setIdle(false);
+        this.Audio.resume().then(
+            velocity($('#visualizer-container rect'), "finish")
+        );
     }
 
     stopChart() {
         this.setStop();
+        this.setIdle(true);
+    }
+
+    setIdle(value) {
+        this.idle = value;
     }
 
     setStop() {
@@ -101,7 +191,7 @@ class AudioVisualizer {
 
     updateChart() {
         let self = this;
-
+ 
         // this.init();
         if(this.#svg) {
             this.#svg
@@ -127,46 +217,6 @@ class AudioVisualizer {
                 });
         }
        
-    }
-
-    ramp(n) {
-        let percentage = Math.round(n / 255 * this.svgWidth);
-        
-        return percentage;
-    }
-
-    renderChart() {   
-        let self = this;
-
-        let id = requestAnimationFrame(this.renderChart.bind(this));
-
-        // Copy frequency data to frequencyData array.
-        this.#analyser.getByteFrequencyData(this.Bars);
-
-        if(this.Bars.every((d) => d === 0) && this.stop) {
-            // will need to launch idle animation here
-            cancelAnimationFrame(id);
-            return;
-        }
-
-        // Update d3 chart with new data.
-        this.#svg.selectAll('rect')
-            .data(this.Bars)
-            .attr('x', function() {
-                return 0;
-            })
-            .attr('width', function(d) {
-                return self.svgWidth - self.ramp(d);
-            });
-    }
-
-    createSvg() {
-        let self = this;
-
-        return this.d3.select(this.visualizerElement)
-            .append('svg')
-            .attr('height', self.svgHeight)
-            .attr('width', self.svgWidth);
     }
 }
 

@@ -1,0 +1,17 @@
+@mixin slider {
+    & .slider {
+        width: 0;
+        background-color: $outrageous-orange;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        transition: width ease-in .1s;
+        z-index: 0;
+    }
+
+    &:hover {
+        & .slider {
+            width: 100%;
+        }
+    }
+}

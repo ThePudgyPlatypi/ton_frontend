@@ -10,11 +10,13 @@
         flex: 1 0 auto;
         .nav-item {
             @include xy-cell(4, $gutters: 0);
+            @include slider;
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
             position: relative;
             .nav-item-link {
+                @include textShadow;
                 text-decoration: none;
                 text-transform: lowercase;
                 font-size: 2rem;
@@ -23,25 +25,11 @@
                 justify-content: flex-end;
                 align-items: flex-end;
                 color: $white;
-                text-shadow: -2px 4px $black;
                 z-index: 10;
                 width: 100%;
                 height: 100%;
                 span {
                     padding: 10px;
-                }
-            }
-            & .slider {
-                width: 0;
-                background-color: $outrageous-orange;
-                height: 100%;
-                position: absolute;
-                right: 0;
-                transition: width ease-in .1s;
-            }
-            &:hover {
-                & .slider {
-                    width: 100%;
                 }
             }
         }

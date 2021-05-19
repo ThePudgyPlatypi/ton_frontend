@@ -1,0 +1,67 @@
+.audio-controls-container {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    padding-right: 20px;
+    svg {
+        fill: $white;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity .1s ease-out;
+    }
+
+    .equalizer-svg {
+        rect {
+            border-radius: 1px;
+            transform-origin: 0 100%;
+            animation: equalize .75s infinite linear;
+            &.animation-stop {
+                animation: none;
+            }
+            &:nth-child(1) {
+                animation-delay:.05s;
+            }
+            &:nth-child(2) {
+                animation-delay:.075s;
+                animation-duration: .65s;
+            }
+            &:nth-child(3) {
+                animation-delay:.10s;
+                animation-duration: .75s;
+            }
+        }
+    }
+
+    .play-svg {
+        fill-rule: evenodd;
+        stroke: $white;
+        stroke-width: 10;
+        stroke-linejoin: round;
+        stroke-miterlimit: 4;
+        stroke-dasharray: none;
+        stroke-opacity: 1;
+        position: absolute;
+        left: 0;
+    }
+
+    .pause-svg {
+        position: absolute;
+        left: 0;
+    }
+}
+  
+@keyframes equalize {  
+    0% {
+        transform: scaleY(.5);
+    }
+
+    50% {
+        transform: scaleY(1);
+    }
+
+    100% {
+        transform: scaleY(.5);
+    }
+}
+  
