@@ -5,20 +5,17 @@ import colors from '../../styles/_variables.module.scss';
 const ColorPicker = () => {
     const colorPickerTitleText = `< change color`;
 
-    // useEffect(() => {
-    //     let elements = document.querySelectorAll(".color-changer");
-        
-    //     elements.forEach((value) => {
-    //         value.style.backgroundColor = color;
-    //     });
-    // }, [])
-
     function changeColor(e, color) {
         e.preventDefault();
         let elements = document.querySelectorAll(".color-changer");
+        let textElements = document.querySelectorAll(".text-color-changer");
         
         elements.forEach((value) => {
             value.style.backgroundColor = color;
+        });
+
+        textElements.forEach((value) => {
+            value.style.color = color;
         });
     }
 

@@ -1,0 +1,39 @@
+.discography-container {
+    @include xy-grid-container();
+    color: $outrageous-orange;
+
+    .disc-header-container {
+        @include xy-grid();
+        padding: 0 $card-padding;
+    }
+
+    .disc-body-container {
+        @include xy-grid();
+        @include xy-grid-layout(1, '.song-tile-cell');
+        justify-content: space-between;
+        @include breakpoint(medium up) {
+            @include xy-grid-layout(2, '.song-tile-cell');
+        }
+
+        @include breakpoint(large up) {
+            @include xy-grid-layout(3, '.song-tile-cell');
+        }
+
+        .song-tile-cell {
+            @include xy-cell-block();
+            @include xy-cell-gutters(0);
+        }
+        
+        .song-tile-container {
+            @include card-container(transparent, $outrageous-orange, $card-padding, none);
+        }
+
+        .song-tile-section {
+            @include card-section();
+            .song-tile-img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+}

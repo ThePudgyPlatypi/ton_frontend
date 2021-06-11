@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable newline-after-var */
+import React, {useEffect, useState} from 'react';
 import {
     BrowserRouter as Router,
     Route,
@@ -18,13 +19,29 @@ import HeaderContainer from '../../components/containers/header';
 import FooterContainer from '../../components/containers/footer';
 
 function App() {
+    let [music, setMusic] = useState([]);
+    let [isLoading, setIsLoading] = useState(true);
+    
+    useEffect(() => {
+        let response = async () => {
+            let result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/songs`, {
+                method: 'GET',
+            }).then(res => res.json())
+            .then(setIsLoading(false));  
+
+            setMusic(result);
+        };
+
+        response();
+    }, []);
+
     return (
         <>
-            <HeaderContainer />
+            <HeaderContainer songs={music} loading={isLoading} />
             <Router>
                 <div className="body">
                     <Switch>
-                        <Route path="/" component={Home} exact/>
+                        <Route path="/" render={() => <Home songs={music} loading={isLoading} />} exact/>
                         <Route path="/music" component={Music}/>
                         <Route path="/store" component={Store}/>
                         <Route path="/news" component={News}/>

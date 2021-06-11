@@ -1,15 +1,64 @@
-.header-heading-container {
-    .site-heading-link {
-        text-decoration: none;
-        color: $white;
-    }
-    .site-heading {
-        line-height: 3.7rem;
-        span {
+.site-header {
+    .header-heading-container {
+        .site-heading-link {
+            text-decoration: none;
+            color: $white;
+            position: relative;
+            height: 100%;
+            width: 100%;
             display: block;
-            font-size: 4rem;
-            font-weight: 800;
-            text-transform: uppercase;
         }
+
+        .site-heading,
+        .stuck-site-heading {
+            line-height: 3.7rem;
+            margin: 0;
+            span {
+                display: block;
+                font-size: 4rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                transition: transform .3s ease-in;
+            }
+        }
+
+        .stuck-site-heading {
+            position: absolute;
+            top: 0;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s;
+            span {
+                opacity: 0;
+                transform: translateX(0);
+                transition: transform .5s linear .2s, opacity .2s;
+            }
+        }
+    }
+}
+
+.site-header.stuck {
+    .header-heading-container {
+        .site-heading {
+            span:nth-child(2) {
+                transform: translateY(-100%);
+            }
+
+            span:last-child {
+                transform: translateY(-200%);
+            }
+        }
+
+        .stuck-site-heading {
+            background-color: $white;
+            line-height: initial;
+            width: 280px;
+            opacity: 1;
+            span {
+                opacity: 1;
+                color: $black;
+                transform: translateX(120px);
+            }
+        }   
     }
 }

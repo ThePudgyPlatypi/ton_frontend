@@ -143,7 +143,7 @@ class AudioVisualizer {
 
         if(this.Bars.every((d) => d === 0) && this.stop) {
             if(this.idle) {
-                this.idleAnimation();
+                // this.idleAnimation();
             }
             // exits
             cancelAnimationFrame(id);

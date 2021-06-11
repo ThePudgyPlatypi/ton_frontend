@@ -11,6 +11,9 @@ const Title = () => {
                     <span>of</span>
                     <span>Noise</span>
                 </Heading>
+                <div className="stuck-site-heading">
+                    <span className="letters">TON</span>
+                </div>
             </Anchor>
         </div>
     );   

@@ -1,7 +1,9 @@
 .site-header {
     @include xy-grid;
     padding: $header-padding;
-    position: relative;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
     justify-content: space-between;
     .header-heading-container {
         @include xy-cell(3);

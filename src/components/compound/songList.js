@@ -4,24 +4,12 @@ import SongTitleHeader from '../compound/songListHeader';
 import Visualizer from '../compound/visualizer';
 import AudioClickHandler from '../compound/audioClickHandler';
 
-const SongList = () => {
+const SongList = ({songs, isLoading}) => {
     let [music, setMusic] = useState([]);
-    let [isLoading, setIsLoading] = useState(true);
+    let [loading, setLoading] = useState(isLoading);
     let [src, setSrc] = useState("");
     let [audioElement, setAudioElement] = useState("media-element");
     let [background, setBackground] = useState('');
-
-    useEffect(() => {
-        let response = async () => {
-            let result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/songs`, {
-                method: 'GET',
-            }).then(res => res.json())
-            .then(setIsLoading(false));    
-            setMusic(result);
-        };
-
-        response();
-    }, []);
 
     useEffect(() => {
         if(music[0]) {
@@ -31,7 +19,13 @@ const SongList = () => {
         }
     }, [music]);
 
-    return isLoading ? "Loading..." : 
+    // listen for parent prop change
+    useEffect(() => {
+        setLoading(isLoading);
+        setMusic(songs);
+    }, [isLoading, songs]);
+
+    return loading ? "Loading..." : 
         <>
             <div className="song-list-container">
                 <SongTitleHeader />
